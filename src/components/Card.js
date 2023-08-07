@@ -1,4 +1,4 @@
-const Card = () => {
+const Card = (props) => {
   return (
     <div className="card">
       <div className="favorite">
@@ -8,14 +8,14 @@ const Card = () => {
         className="mt-20"
         width={133}
         height={112}
-        src="/img/sneakers/1.jpg"
+        src={props.image}
         alt="Sneakers"
       />
-      <h5>Мужские Кроссовки Nike Blazer Mid Suede</h5>
+      <h5>{props.title}</h5>
       <div className="card-bottom d-flex justify-between align-center">
         <div className="d-flex flex-column">
           <span>Цена:</span>
-          <b>12 999 руб.</b>
+          <b>{props.price} руб.</b>
         </div>
         <button className="button">
           <img src="/img/plus.svg" alt="Plus" />
