@@ -1,11 +1,20 @@
+import { useEffect, useState } from "react";
 import styles from "./Card.module.scss";
 
-console.log(styles);
-
 const Card = (props) => {
+  const [isAdded, setIsAdded] = useState(false);
+
+  const onClickPlus = () => {
+    setIsAdded(!isAdded);
+  };
+
+  useEffect(() => {
+    console.log("Переменная изменилась");
+  }, [isAdded]);
+
   return (
     <div className={styles.card}>
-      <div className={styles.favorite}>
+      <div className={styles.favorite} onClick={props.onFavorite}>
         <img src="/img/heart-unliked.svg" alt="Unliked" />
       </div>
       <img
@@ -21,9 +30,12 @@ const Card = (props) => {
           <span>Цена:</span>
           <b>{props.price} руб.</b>
         </div>
-        <button className="button">
-          <img src="/img/plus.svg" alt="Plus" />
-        </button>
+        <img
+          className={styles.plus}
+          onClick={onClickPlus}
+          src={isAdded ? "/img/button-checked.svg" : "/img/button-plus.svg"}
+          alt="Plus"
+        />
       </div>
     </div>
   );
