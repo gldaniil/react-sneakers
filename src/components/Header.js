@@ -8,7 +8,7 @@ const Header = (props) => {
           <p className="opacity-5">Магазин лучших кроссовок</p>
         </div>
       </div>
-      <ul className="d-flex">
+      <ul className="navMenu d-flex">
         <li onClick={props.onClickCart} className="mr-30 cu-p">
           <img src="/img/backet.svg" alt="Backet" />
           <span>1205 руб.</span>

@@ -37,6 +37,13 @@ header {
   
 }
 
+.navMenu {
+  li {
+    display: flex;
+    align-items: center;
+  }
+}
+
 .content {
   h1 {
     margin: 0;
