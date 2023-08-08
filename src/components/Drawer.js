@@ -1,4 +1,4 @@
-const Drawer = ({ onClose, items = [] }) => {
+const Drawer = ({ onClose, onRemove, items = [] }) => {
   return (
     <div className="overlay">
       <div className="drawer">
@@ -23,6 +23,7 @@ const Drawer = ({ onClose, items = [] }) => {
                 <b>{obj.price} руб.</b>
               </div>
               <img
+                onClick={() => onRemove(obj.id)}
                 src="/img/button-remove.svg"
                 alt="Remove"
                 className="cart__remove-button"
