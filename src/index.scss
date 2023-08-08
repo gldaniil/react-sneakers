@@ -47,6 +47,15 @@ header {
   border: 1px solid #F2F2F2;
   border-radius: 10px;
   padding: 0 13px;
+  position: relative;
+
+  .remove {
+    position: absolute;
+    top: 13px;
+    right: 15px;
+    width: 18px;
+    height: 18px;
+  }
 
   input {
     width: 200px;
