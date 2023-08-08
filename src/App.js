@@ -6,6 +6,7 @@ import Header from "./components/Header";
 function App() {
   const [items, setItems] = useState([]);
   const [cartItems, setCartItems] = useState([]);
+  const [searchValue, setSearchValue] = useState();
 
   const [cartOpened, setCartOpened] = useState(false);
 
@@ -23,6 +24,10 @@ function App() {
     setCartItems((prev) => [...prev, obj]);
   };
 
+  const onChangeSearchInput = (event) => {
+    setSearchValue(event.target.value);
+  };
+
   return (
     <div className="wrapper clear">
       {cartOpened && (
@@ -32,14 +37,30 @@ function App() {
       <Header onClickCart={() => setCartOpened(true)} />
       <div className=" content p-40">
         <div className="d-flex align-center justify-between mb-40">
-          <h1 className="">Все кроссовки</h1>
+          <h1>
+            {searchValue
+              ? `Поиск по запросу: '${searchValue}'`
+              : "Все кроссовки"}
+          </h1>
           <div className="search-block d-flex">
             <img src="/img/search.svg" alt="Search" />
-            <input placeholder="Поиск..." />
+            {searchValue && (
+              <img
+                onClick={() => setSearchValue("")}
+                src="/img/button-remove.svg"
+                alt="Remove"
+                className="remove cu-p"
+              />
+            )}
+            <input
+              onChange={onChangeSearchInput}
+              value={searchValue}
+              placeholder="Поиск..."
+            />
           </div>
         </div>
 
-        <div className="d-flex">
+        <div className="d-flex flex-wrap">
           {items.map((item, index) => {
             return (
               <Card
