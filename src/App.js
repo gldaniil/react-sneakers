@@ -6,7 +6,7 @@ import Header from "./components/Header";
 function App() {
   const [items, setItems] = useState([]);
   const [cartItems, setCartItems] = useState([]);
-  const [searchValue, setSearchValue] = useState();
+  const [searchValue, setSearchValue] = useState("");
 
   const [cartOpened, setCartOpened] = useState(false);
 
@@ -38,9 +38,7 @@ function App() {
       <div className=" content p-40">
         <div className="d-flex align-center justify-between mb-40">
           <h1>
-            {searchValue
-              ? `Поиск по запросу: '${searchValue}'`
-              : "Все кроссовки"}
+            {searchValue ? `Поиск по запросу: ${searchValue}` : "Все кроссовки"}
           </h1>
           <div className="search-block d-flex">
             <img src="/img/search.svg" alt="Search" />
@@ -61,18 +59,22 @@ function App() {
         </div>
 
         <div className="d-flex flex-wrap">
-          {items.map((item, index) => {
-            return (
-              <Card
-                key={index}
-                title={item.title}
-                price={item.price}
-                image={item.image}
-                onFavorite={() => console.log("Добавили в закладки")}
-                onPlus={(obj) => onAddToCart(obj)}
-              />
-            );
-          })}
+          {items
+            .filter((item) =>
+              item.title.toLowerCase().includes(searchValue.toLowerCase())
+            )
+            .map((item, index) => {
+              return (
+                <Card
+                  key={index}
+                  title={item.title}
+                  price={item.price}
+                  image={item.image}
+                  onFavorite={() => console.log("Добавили в закладки")}
+                  onPlus={(obj) => onAddToCart(obj)}
+                />
+              );
+            })}
         </div>
       </div>
     </div>
