@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "./Card.module.scss";
 
 const Card = ({ title, image, price, onFavorite, onPlus }) => {
@@ -8,10 +8,6 @@ const Card = ({ title, image, price, onFavorite, onPlus }) => {
     onPlus({ title, image, price });
     setIsAdded(!isAdded);
   };
-
-  useEffect(() => {
-    console.log("Переменная изменилась");
-  }, [isAdded]);
 
   return (
     <div className={styles.card}>
