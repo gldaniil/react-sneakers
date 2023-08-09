@@ -11,6 +11,23 @@ const Drawer = ({ onClose, onRemove, items = [] }) => {
             className="cart__remove-button cu-p"
           />
         </h2>
+
+        <div className="cartEmpty d-flex align-center justify-center flex-column flex">
+          <img
+            className="mb-20"
+            width={120}
+            height={120}
+            src="/img/empty-cart.png"
+            alt="Empty cart"
+          />
+          <h2>Корзина пустая</h2>
+          <p>Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ.</p>
+          <button className="green-button">
+            <img src="/img/arrow.svg" alt="Arrow" />
+            Вернуться назад
+          </button>
+        </div>
+
         <div className="items">
           {items.map((obj, index) => (
             <div key={index} className="cart__item d-flex align-center mb-20">
