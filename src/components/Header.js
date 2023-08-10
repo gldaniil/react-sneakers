@@ -13,10 +13,10 @@ const Header = (props) => {
           <img src="/img/backet.svg" alt="Backet" />
           <span>1205 руб.</span>
         </li>
-        <li>
+        <li className="mr-20 cu-p">
           <img src="/img/liked.svg" alt="Liked" />
         </li>
-        <li>
+        <li className="cu-p">
           <img src="/img/profile.svg" alt="Profile" />
         </li>
       </ul>
