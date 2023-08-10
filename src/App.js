@@ -7,32 +7,35 @@ import Header from "./components/Header";
 function App() {
   const [items, setItems] = useState([]);
   const [cartItems, setCartItems] = useState([]);
+  const [favorites, setFavorites] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [cartOpened, setCartOpened] = useState(false);
 
+  axios.defaults.baseURL = "http://localhost:3001";
+
   useEffect(() => {
-    axios
-      .get("https://64d28ebff8d60b17436231e5.mockapi.io/api/v3/sneakers")
-      .then((res) => {
-        setItems(res.data);
-      });
-    axios
-      .get("https://64d28ebff8d60b17436231e5.mockapi.io/api/v3/cart")
-      .then((res) => {
-        setCartItems(res.data);
-      });
+    axios.get("/sneakers").then((res) => {
+      setItems(res.data);
+    });
+    axios.get("/cart").then((res) => {
+      setCartItems(res.data);
+    });
   }, []);
 
   const onAddToCart = (obj) => {
-    axios.post("https://64d28ebff8d60b17436231e5.mockapi.io/api/v3/cart", obj);
+    axios.post("/cart", obj);
     setCartItems((prev) => [...prev, obj]);
   };
 
   const onRemoveItem = (id) => {
-    axios.delete(
-      `https://64d28ebff8d60b17436231e5.mockapi.io/api/v3/cart/${id}`
-    );
+    console.log(id);
+    axios.delete(`/cart/${id}`);
     setCartItems((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  const onAddToFavorite = (obj) => {
+    axios.post("/cart", obj);
+    setCartItems((prev) => [...prev, obj]);
   };
 
   const onChangeSearchInput = (event) => {
