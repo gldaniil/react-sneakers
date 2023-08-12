@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import { Route, Routes } from "react-router-dom";
 import axios from "axios";
-import Card from "./components/Card";
 import Drawer from "./components/Drawer";
 import Header from "./components/Header";
+import Home from "./pages/Home";
+import Favorites from "./pages/Favorites";
 
 function App() {
   const [items, setItems] = useState([]);
@@ -20,6 +22,9 @@ function App() {
     axios.get("/cart").then((res) => {
       setCartItems(res.data);
     });
+    axios.get("/favorites").then((res) => {
+      setFavorites(res.data);
+    });
   }, []);
 
   const onAddToCart = (obj) => {
@@ -28,14 +33,13 @@ function App() {
   };
 
   const onRemoveItem = (id) => {
-    console.log(id);
     axios.delete(`/cart/${id}`);
     setCartItems((prev) => prev.filter((item) => item.id !== id));
   };
 
   const onAddToFavorite = (obj) => {
-    axios.post("/cart", obj);
-    setCartItems((prev) => [...prev, obj]);
+    axios.post("/favorites", obj);
+    setFavorites((prev) => [...prev, obj]);
   };
 
   const onChangeSearchInput = (event) => {
@@ -51,50 +55,24 @@ function App() {
           onRemove={onRemoveItem}
         />
       )}
-
       <Header onClickCart={() => setCartOpened(true)} />
-      <div className=" content p-40">
-        <div className="d-flex align-center justify-between mb-40">
-          <h1>
-            {searchValue ? `Поиск по запросу: ${searchValue}` : "Все кроссовки"}
-          </h1>
-          <div className="search-block d-flex">
-            <img src="/img/search.svg" alt="Search" />
-            {searchValue && (
-              <img
-                onClick={() => setSearchValue("")}
-                src="/img/button-remove.svg"
-                alt="Remove"
-                className="remove cu-p"
-              />
-            )}
-            <input
-              onChange={onChangeSearchInput}
-              value={searchValue}
-              placeholder="Поиск..."
-            />
-          </div>
-        </div>
 
-        <div className="d-flex flex-wrap">
-          {items
-            .filter((item) =>
-              item.title.toLowerCase().includes(searchValue.toLowerCase())
-            )
-            .map((item, index) => {
-              return (
-                <Card
-                  key={index}
-                  title={item.title}
-                  price={item.price}
-                  image={item.image}
-                  onFavorite={() => console.log("Добавили в закладки")}
-                  onPlus={(obj) => onAddToCart(obj)}
-                />
-              );
-            })}
-        </div>
-      </div>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Home
+              items={items}
+              searchValue={searchValue}
+              setSearchValue={setSearchValue}
+              onChangeSearchInput={onChangeSearchInput}
+              onAddToFavorite={onAddToFavorite}
+              onAddToCart={onAddToCart}
+            />
+          }
+        ></Route>
+        <Route path="/favorites" element={<Favorites />}></Route>
+      </Routes>
     </div>
   );
 }
