@@ -37,9 +37,17 @@ function App() {
     setCartItems((prev) => prev.filter((item) => item.id !== id));
   };
 
-  const onAddToFavorite = (obj) => {
-    axios.post("/favorites", obj);
-    setFavorites((prev) => [...prev, obj]);
+  const onAddToFavorite = async (obj) => {
+    try {
+      if (favorites.find((favObj) => favObj.id === obj.id)) {
+        axios.delete(`/favorites/${obj.id}`);
+      } else {
+        const { data } = await axios.post("/favorites", obj);
+        setFavorites((prev) => [...prev, data]);
+      }
+    } catch (error) {
+      alert("Не удалось добавить в избранное!");
+    }
   };
 
   const onChangeSearchInput = (event) => {
@@ -73,7 +81,9 @@ function App() {
         ></Route>
         <Route
           path="/favorites"
-          element={<Favorites items={favorites} />}
+          element={
+            <Favorites items={favorites} onAddToFavorite={onAddToFavorite} />
+          }
         ></Route>
       </Routes>
     </div>

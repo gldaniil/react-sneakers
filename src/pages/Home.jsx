@@ -41,11 +41,9 @@ const Home = ({
             return (
               <Card
                 key={index}
-                title={item.title}
-                price={item.price}
-                image={item.image}
                 onFavorite={(obj) => onAddToFavorite(obj)}
                 onPlus={(obj) => onAddToCart(obj)}
+                {...item}
               />
             );
           })}
