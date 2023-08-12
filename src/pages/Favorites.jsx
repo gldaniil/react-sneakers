@@ -17,6 +17,7 @@ const Favorites = ({ items }) => {
               image={item.image}
               // onFavorite={(obj) => onAddToFavorite(obj)}
               // onPlus={(obj) => onAddToCart(obj)}
+              favorited={true}
             />
           );
         })}
