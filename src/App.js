@@ -71,7 +71,10 @@ function App() {
             />
           }
         ></Route>
-        <Route path="/favorites" element={<Favorites />}></Route>
+        <Route
+          path="/favorites"
+          element={<Favorites items={favorites} />}
+        ></Route>
       </Routes>
     </div>
   );
