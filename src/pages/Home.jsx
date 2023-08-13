@@ -2,6 +2,7 @@ import Card from "../components/Card";
 
 const Home = ({
   items,
+  cartItems,
   searchValue,
   setSearchValue,
   onChangeSearchInput,
@@ -43,6 +44,7 @@ const Home = ({
                 key={index}
                 onFavorite={(obj) => onAddToFavorite(obj)}
                 onPlus={(obj) => onAddToCart(obj)}
+                added={cartItems.some((obj) => obj.id === item.id)}
                 {...item}
               />
             );
