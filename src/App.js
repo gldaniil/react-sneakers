@@ -16,15 +16,17 @@ function App() {
   axios.defaults.baseURL = "http://localhost:3001";
 
   useEffect(() => {
-    axios.get("/sneakers").then((res) => {
-      setItems(res.data);
-    });
-    axios.get("/cart").then((res) => {
-      setCartItems(res.data);
-    });
-    axios.get("/favorites").then((res) => {
-      setFavorites(res.data);
-    });
+    async function fetchData() {
+      const cartResponse = await axios.get("/cart");
+      const favoritesResponse = await axios.get("/favorites");
+      const itemsResponse = await axios.get("/sneakers");
+
+      setCartItems(cartResponse.data);
+      setItems(itemsResponse.data);
+      setFavorites(favoritesResponse.data);
+    }
+
+    fetchData();
   }, []);
 
   const onAddToCart = (obj) => {
