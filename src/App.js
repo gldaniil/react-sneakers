@@ -28,8 +28,18 @@ function App() {
   }, []);
 
   const onAddToCart = (obj) => {
-    axios.post("/cart", obj);
-    setCartItems((prev) => [...prev, obj]);
+    console.log(obj);
+    if (cartItems.find((item) => Number(item.id) === Number(obj.id))) {
+      axios.delete(`/cart/${obj.id}`);
+      setCartItems((prev) =>
+        prev.filter((item) => Number(item.id) !== Number(obj.id))
+      );
+    } else {
+      axios.post("/cart", obj);
+      setCartItems((prev) => [...prev, obj]);
+    }
+    try {
+    } catch (error) {}
   };
 
   const onRemoveItem = (id) => {

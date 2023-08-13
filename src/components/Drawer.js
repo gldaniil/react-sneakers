@@ -15,9 +15,9 @@ const Drawer = ({ onClose, onRemove, items = [] }) => {
         {items.length > 0 ? (
           <>
             <div className="items">
-              {items.map((obj, index) => (
+              {items.map((obj) => (
                 <div
-                  key={index}
+                  key={obj.id}
                   className="cart__item d-flex align-center mb-20"
                 >
                   <div
