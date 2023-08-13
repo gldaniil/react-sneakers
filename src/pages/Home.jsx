@@ -46,6 +46,7 @@ const Home = ({
                 onPlus={(obj) => onAddToCart(obj)}
                 added={cartItems.some((obj) => obj.id === item.id)}
                 {...item}
+                loading
               />
             );
           })}
