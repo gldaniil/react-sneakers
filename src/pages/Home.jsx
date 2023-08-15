@@ -8,24 +8,23 @@ const Home = ({
   onChangeSearchInput,
   onAddToFavorite,
   onAddToCart,
+  isLoading,
 }) => {
   const renderItems = () => {
-    return items
-      .filter((item) =>
-        item.title.toLowerCase().includes(searchValue.toLowerCase())
-      )
-      .map((item, index) => {
-        return (
-          <Card
-            key={index}
-            onFavorite={(obj) => onAddToFavorite(obj)}
-            onPlus={(obj) => onAddToCart(obj)}
-            added={cartItems.some((obj) => obj.id === item.id)}
-            {...item}
-            loading
-          />
-        );
-      });
+    const filtredItems = items.filter((item) =>
+      item.title.toLowerCase().includes(searchValue.toLowerCase())
+    );
+
+    return (isLoading ? [...Array(12)] : filtredItems).map((item, index) => (
+      <Card
+        key={index}
+        onFavorite={(obj) => onAddToFavorite(obj)}
+        onPlus={(obj) => onAddToCart(obj)}
+        added={cartItems.some((obj) => obj.id === item.id)}
+        loading={isLoading}
+        {...item}
+      />
+    ));
   };
 
   return (

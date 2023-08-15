@@ -12,6 +12,7 @@ function App() {
   const [favorites, setFavorites] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [cartOpened, setCartOpened] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   axios.defaults.baseURL = "http://localhost:3001";
 
@@ -20,6 +21,8 @@ function App() {
       const cartResponse = await axios.get("/cart");
       const favoritesResponse = await axios.get("/favorites");
       const itemsResponse = await axios.get("/sneakers");
+
+      setIsLoading(false);
 
       setCartItems(cartResponse.data);
       setItems(itemsResponse.data);
@@ -89,6 +92,7 @@ function App() {
               onChangeSearchInput={onChangeSearchInput}
               onAddToFavorite={onAddToFavorite}
               onAddToCart={onAddToCart}
+              isLoading={isLoading}
             />
           }
         ></Route>
