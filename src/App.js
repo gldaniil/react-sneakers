@@ -57,6 +57,9 @@ function App() {
     try {
       if (favorites.find((favObj) => favObj.id === obj.id)) {
         axios.delete(`/favorites/${obj.id}`);
+        setFavorites((prev) =>
+          prev.filter((item) => Number(item.id) !== Number(obj.id))
+        );
       } else {
         const { data } = await axios.post("/favorites", obj);
         setFavorites((prev) => [...prev, data]);
@@ -75,7 +78,9 @@ function App() {
   };
 
   return (
-    <AppContext.Provider value={{ items, cartItems, favorites, isItemAdded }}>
+    <AppContext.Provider
+      value={{ items, cartItems, favorites, isItemAdded, onAddToFavorite }}
+    >
       <div className="wrapper clear">
         {cartOpened && (
           <Drawer
@@ -102,10 +107,7 @@ function App() {
               />
             }
           ></Route>
-          <Route
-            path="/favorites"
-            element={<Favorites onAddToFavorite={onAddToFavorite} />}
-          ></Route>
+          <Route path="/favorites" element={<Favorites />}></Route>
         </Routes>
       </div>
     </AppContext.Provider>
