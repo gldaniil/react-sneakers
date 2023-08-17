@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const Header = (props) => {
+const Header = ({ onClickCart }) => {
   return (
     <header className="d-flex justify-between align-center p-40">
       <Link to="/">
@@ -13,7 +13,7 @@ const Header = (props) => {
         </div>
       </Link>
       <ul className="navMenu d-flex">
-        <li onClick={props.onClickCart} className="mr-30 cu-p">
+        <li onClick={onClickCart} className="mr-30 cu-p">
           <img src="/img/backet.svg" alt="Backet" />
           <span>1205 руб.</span>
         </li>
