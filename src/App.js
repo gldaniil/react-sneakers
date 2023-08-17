@@ -5,8 +5,7 @@ import Drawer from "./components/Drawer";
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import Favorites from "./pages/Favorites";
-
-const AppContext = createContext({});
+import AppContext from "./context";
 
 function App() {
   const [items, setItems] = useState([]);
@@ -15,8 +14,6 @@ function App() {
   const [searchValue, setSearchValue] = useState("");
   const [cartOpened, setCartOpened] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-
-  console.log(AppContext);
 
   axios.defaults.baseURL = "http://localhost:3001";
 
@@ -74,7 +71,7 @@ function App() {
   };
 
   return (
-    <AppContext.Provider>
+    <AppContext.Provider value={{ items, cartItems, favorites }}>
       <div className="wrapper clear">
         {cartOpened && (
           <Drawer
@@ -103,9 +100,7 @@ function App() {
           ></Route>
           <Route
             path="/favorites"
-            element={
-              <Favorites items={favorites} onAddToFavorite={onAddToFavorite} />
-            }
+            element={<Favorites onAddToFavorite={onAddToFavorite} />}
           ></Route>
         </Routes>
       </div>
