@@ -1,8 +1,8 @@
 import React from "react";
 import AppContext from "../context";
 
-const Info = ({ title, description }) => {
-  const [] = React.useContext(AppContext);
+const Info = ({ title, description, image }) => {
+  const { setCartOpened } = React.useContext(AppContext);
   return (
     <div className="cartEmpty d-flex align-center justify-center flex-column flex">
       <img
@@ -14,8 +14,8 @@ const Info = ({ title, description }) => {
       />
       <h2>{title}</h2>
       <p>{description}</p>
-      <button onClick={onClose} className="green-button">
-        <img src="/img/arrow.svg" alt="Arrow" />
+      <button onClick={() => setCartOpened(false)} className="green-button">
+        <img src={image} alt="Arrow" />
         Вернуться назад
       </button>
     </div>
