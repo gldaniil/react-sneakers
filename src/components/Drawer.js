@@ -1,6 +1,13 @@
+import { useState } from "react";
 import Info from "./Info";
 
 const Drawer = ({ onClose, onRemove, items = [] }) => {
+  const [orderComplete, setOrderComplete] = useState(false);
+
+  const onClickOrder = () => {
+    setOrderComplete(true);
+  };
+
   return (
     <div className="overlay">
       <div className="drawer">
@@ -52,7 +59,7 @@ const Drawer = ({ onClose, onRemove, items = [] }) => {
                   <b>1074 руб.</b>
                 </li>
               </ul>
-              <button className="green-button">
+              <button onClick={onClickOrder} className="green-button">
                 Оформить заказ <img src="/img/arrow.svg" alt="Arrow" />
               </button>
             </div>
