@@ -3,14 +3,27 @@ import Info from "./Info";
 import AppContext from "../context";
 import axios from "axios";
 
+axios.defaults.baseURL = "http://localhost:3001";
+
 const Drawer = ({ onClose, onRemove, items = [] }) => {
   const { cartItems, setCartItems } = useContext(AppContext);
+  const [orderId, setOrderId] = useState(null);
   const [orderComplete, setOrderComplete] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const onClickOrder = () => {
-    axios.post("/orders", cartItems);
-    setOrderComplete(true);
-    setCartItems([]);
+  const onClickOrder = async () => {
+    try {
+      setIsLoading(true);
+      const { data } = await axios.post("/orders", {
+        items: cartItems,
+      });
+      setOrderId(data.id);
+      setOrderComplete(true);
+      setCartItems([]);
+    } catch (error) {
+      alert("Не удалось создать заказ :(");
+    }
+    setIsLoading(false);
   };
 
   return (
@@ -64,7 +77,11 @@ const Drawer = ({ onClose, onRemove, items = [] }) => {
                   <b>1074 руб.</b>
                 </li>
               </ul>
-              <button onClick={onClickOrder} className="green-button">
+              <button
+                disabled={isLoading}
+                onClick={onClickOrder}
+                className="green-button"
+              >
                 Оформить заказ <img src="/img/arrow.svg" alt="Arrow" />
               </button>
             </div>
@@ -74,7 +91,7 @@ const Drawer = ({ onClose, onRemove, items = [] }) => {
             title={orderComplete ? "Заказ оформлен!" : "Корзина пустая"}
             description={
               orderComplete
-                ? "Ваш заказ #18 скоро будет передан курьерской доставке"
+                ? `Ваш заказ #${orderId} скоро будет передан курьерской доставке`
                 : "Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ."
             }
             image={orderComplete ? "/img/complete-order.png" : "/img/arrow.svg"}
