@@ -17,6 +17,9 @@ const Drawer = ({ onClose, onRemove, items = [] }) => {
       const { data } = await axios.post("/orders", {
         items: cartItems,
       });
+      cartItems.forEach((item) => {
+        axios.delete(`/cart/${item.id}`);
+      });
       setOrderId(data.id);
       setOrderComplete(true);
       setCartItems([]);
@@ -94,7 +97,9 @@ const Drawer = ({ onClose, onRemove, items = [] }) => {
                 ? `Ваш заказ #${orderId} скоро будет передан курьерской доставке`
                 : "Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ."
             }
-            image={orderComplete ? "/img/complete-order.png" : "/img/arrow.svg"}
+            image={
+              orderComplete ? "/img/complete-order.png" : "/img/empty-cart.png"
+            }
           />
         )}
       </div>
