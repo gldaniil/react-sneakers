@@ -1,11 +1,14 @@
 import { useContext, useState } from "react";
 import Info from "./Info";
 import AppContext from "../context";
+import axios from "axios";
 
 const Drawer = ({ onClose, onRemove, items = [] }) => {
-  const { setCartItems } = useContext(AppContext);
+  const { cartItems, setCartItems } = useContext(AppContext);
   const [orderComplete, setOrderComplete] = useState(false);
+
   const onClickOrder = () => {
+    axios.post("/orders", cartItems);
     setOrderComplete(true);
     setCartItems([]);
   };
