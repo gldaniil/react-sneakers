@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Info from "./Info";
+import AppContext from "../context";
 
 const Drawer = ({ onClose, onRemove, items = [] }) => {
+  const { setCartItems } = useContext(AppContext);
   const [orderComplete, setOrderComplete] = useState(false);
-
   const onClickOrder = () => {
     setOrderComplete(true);
+    setCartItems([]);
   };
 
   return (
@@ -66,9 +68,13 @@ const Drawer = ({ onClose, onRemove, items = [] }) => {
           </>
         ) : (
           <Info
-            title="Корзина пустая"
-            description="Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ."
-            image="/img/arrow.svg"
+            title={orderComplete ? "Заказ оформлен!" : "Корзина пустая"}
+            description={
+              orderComplete
+                ? "Ваш заказ #18 скоро будет передан курьерской доставке"
+                : "Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ."
+            }
+            image={orderComplete ? "/img/complete-order.png" : "/img/arrow.svg"}
           />
         )}
       </div>

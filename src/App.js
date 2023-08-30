@@ -86,6 +86,7 @@ function App() {
         isItemAdded,
         onAddToFavorite,
         setCartOpened,
+        setCartItems,
       }}
     >
       <div className="wrapper clear">
