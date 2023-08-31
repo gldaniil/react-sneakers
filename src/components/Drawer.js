@@ -5,6 +5,8 @@ import axios from "axios";
 
 axios.defaults.baseURL = "http://localhost:3001";
 
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 const Drawer = ({ onClose, onRemove, items = [] }) => {
   const { cartItems, setCartItems } = useContext(AppContext);
   const [orderId, setOrderId] = useState(null);
@@ -17,14 +19,18 @@ const Drawer = ({ onClose, onRemove, items = [] }) => {
       const { data } = await axios.post("/orders", {
         items: cartItems,
       });
-      cartItems.forEach((item) => {
-        axios.delete(`/cart/${item.id}`);
-      });
+
+      for (let i = 0; i < cartItems.length; i++) {
+        const item = cartItems[i];
+        await axios.delete(`/cart/${item.id}`);
+        await delay(500);
+      }
+
       setOrderId(data.id);
       setOrderComplete(true);
       setCartItems([]);
     } catch (error) {
-      alert("Не удалось создать заказ :(");
+      alert("Ошибка при создании заказа :(");
     }
     setIsLoading(false);
   };
