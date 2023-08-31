@@ -204,7 +204,7 @@ header {
     position: relative;
 
     &:disabled {
-      animation: button-loading .5s ease-in-out infinite;
+      animation: button-loading 1s ease-in-out infinite;
     }
 
     &:disabled {
