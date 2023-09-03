@@ -27,7 +27,9 @@ const Header = ({ onClickCart }) => {
           </Link>
         </li>
         <li className="cu-p">
-          <img src="/img/profile.svg" alt="Profile" />
+          <Link to="/orders">
+            <img src="/img/profile.svg" alt="Profile" />
+          </Link>
         </li>
       </ul>
     </header>
