@@ -1,8 +1,18 @@
-import { useContext } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import Card from "../components/Card";
 import AppContext from "../context";
 
 const Orders = () => {
+  const [orders, setOrders] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await axios.get("/orders");
+      console.log(data);
+    })();
+  }, []);
+
   return (
     <div className=" content p-40">
       <div className="d-flex align-center justify-between mb-40">
