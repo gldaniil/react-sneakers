@@ -10,9 +10,14 @@ const Orders = () => {
 
   useEffect(() => {
     (async () => {
-      const { data } = await axios.get("/orders");
-      setOrders(data.reduce((prev, obj) => [...prev, ...obj.items], []));
-      setIsLoading(false);
+      try {
+        const { data } = await axios.get("/orders");
+        setOrders(data.reduce((prev, obj) => [...prev, ...obj.items], []));
+        setIsLoading(false);
+      } catch (error) {
+        alert("Ошибка при запросе заказов!");
+        console.error(error);
+      }
     })();
   }, []);
 
