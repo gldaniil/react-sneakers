@@ -1,15 +1,18 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import Card from "../components/Card";
 import AppContext from "../context";
 
 const Orders = () => {
+  const { onAddToCart, onAddToFavorite } = useContext(AppContext);
   const [orders, setOrders] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
       const { data } = await axios.get("/orders");
-      console.log(data);
+      setOrders(data.reduce((prev, obj) => [...prev, ...obj.items], []));
+      setIsLoading(false);
     })();
   }, []);
 
@@ -20,13 +23,13 @@ const Orders = () => {
       </div>
 
       <div className="d-flex flex-wrap">
-        {[].map((item, index) => {
+        {orders.map((item, index) => {
           return (
             <Card
               key={index}
-              // onFavorite={(obj) => onAddToFavorite(obj)}
-              // onPlus={(obj) => onAddToCart(obj)}
-              favorited={true}
+              onFavorite={(obj) => onAddToFavorite(obj)}
+              onPlus={(obj) => onAddToCart(obj)}
+              loading={isLoading}
               {...item}
             />
           );
