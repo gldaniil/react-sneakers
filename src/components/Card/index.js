@@ -66,16 +66,18 @@ const Card = ({
               <span>Цена:</span>
               <b>{price} руб.</b>
             </div>
-            <img
-              className={styles.plus}
-              onClick={onClickPlus}
-              src={
-                isItemAdded(id)
-                  ? "/img/button-checked.svg"
-                  : "/img/button-plus.svg"
-              }
-              alt="Plus"
-            />
+            {onPlus && (
+              <img
+                className={styles.plus}
+                onClick={onClickPlus}
+                src={
+                  isItemAdded(id)
+                    ? "/img/button-checked.svg"
+                    : "/img/button-plus.svg"
+                }
+                alt="Plus"
+              />
+            )}
           </div>
         </>
       )}
